@@ -1,17 +1,19 @@
-import { useState } from "react";
-import styles from "../../styles/style.js";
-import { Link } from "react-router-dom";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { RxAvatar } from "react-icons/rx";
 import axios from "axios";
+import { useState } from "react";
 import { server } from "../../server.js";
+import { RxAvatar } from "react-icons/rx";
+import styles from "../../styles/style.js";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { toast } from 'react-toastify';
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState();
-  const [name, setName] = useState("");
-  const [visible, setVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
+  const [visible, setVisible] = useState(false);
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
@@ -29,11 +31,11 @@ const Signup = () => {
         config
       )
       .then((res) => {
-        console.log("result");
-        console.log(res);
+        alert(res.message);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response)
+        // toast.error(err.response.data.message)
       });
   };
 
