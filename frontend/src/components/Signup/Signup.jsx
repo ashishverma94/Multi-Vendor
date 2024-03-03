@@ -5,7 +5,7 @@ import { RxAvatar } from "react-icons/rx";
 import styles from "../../styles/style.js";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -31,11 +31,15 @@ const Signup = () => {
         config
       )
       .then((res) => {
-        alert(res.message);
+        console.log("check your email") ;
+        toast.success(res.data.message);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setAvatar("");
       })
       .catch((err) => {
-        console.log(err.response)
-        // toast.error(err.response.data.message)
+        toast.error(err.response.data);
       });
   };
 

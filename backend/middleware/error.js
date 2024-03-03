@@ -1,4 +1,4 @@
-const ErrorHandler = require("../utils/ErrorHandler.js") ;
+const ErrorHandler = require("../utils/ErrorHandler");
 
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
@@ -14,7 +14,7 @@ module.exports = (err, req, res, next) => {
   if (err.code === 11000) {
     const message = `Duplicate key ${Object.keys(err.keyValue)} Entered`;
     err = new ErrorHandler(message, 400);
-  }  
+  }
 
   // wrong jwt error
   if (err.name === "JsonWebTokenError") {
