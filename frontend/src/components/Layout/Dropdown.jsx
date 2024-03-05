@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/style";
 
-const Dropdown = ({ categoriesData, setDropdown }) => {
+const Dropdown = ({ categoriesData, setDropDown }) => {
   const navigate = useNavigate();
   const handleSubmit = (i) => {
     navigate(`/products?category=${i.title}`);
-    setDropdown(false);
+    setDropDown(false);
     window.location.reload();
   };
 

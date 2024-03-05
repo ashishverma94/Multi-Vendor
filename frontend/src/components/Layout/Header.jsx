@@ -6,18 +6,21 @@ import {
 import React, { useState } from "react";
 import styles from "../../styles/style";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Navbar from "../Layout/Navbar.jsx";
 import { CgProfile } from "react-icons/cg";
+import { backend_url } from "../../server.js";
 import Dropdown from "../Layout/Dropdown.jsx";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { categoriesData, productData } from "../../static/data.jsx";
 
-const Header = ({activeHeading}) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchData, setSearchData] = useState(null);
+const Header = ({ activeHeading }) => {
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const [active, setActive] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchData, setSearchData] = useState(null);
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
@@ -102,7 +105,7 @@ const Header = ({activeHeading}) => {
           className={`${styles.section} relative ${styles.normalFlex} justify-between`}
         >
           {/* category */}
-          <div onClick={()=>setDropDown(!dropDown)}>
+          <div onClick={() => setDropDown(!dropDown)}>
             <div className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
               <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
               <button
@@ -149,9 +152,19 @@ const Header = ({activeHeading}) => {
             </div>
             <div className={`${styles.normalFlex}`}>
               <div className="relative cursor-pointer mr-[15px]">
-                <Link to="/login">
-                  <CgProfile size={30} color="rgb(255 255 255 /83%)" />
-                </Link>
+                {isAuthenticated ? (
+                  <Link to="/profile">
+                    <img
+                      src={`${backend_url}${user.avatar}`}
+                      className="w-[35px] h-[35px] rounded-full"
+                      alt="avatar"
+                    />
+                  </Link>
+                ) : (
+                  <Link to="/login">
+                    <CgProfile size={30} color="rgb(255 255 255 /83%)" />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
