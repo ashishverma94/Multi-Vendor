@@ -3,6 +3,7 @@ import {
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import Cart from "../Cart/Cart.jsx";
 import React, { useState } from "react";
 import styles from "../../styles/style";
 import { Link } from "react-router-dom";
@@ -12,15 +13,18 @@ import { CgProfile } from "react-icons/cg";
 import { backend_url } from "../../server.js";
 import Dropdown from "../Layout/Dropdown.jsx";
 import { BiMenuAltLeft } from "react-icons/bi";
+import Wishlist from "../Wishlist/Wishlist.jsx";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { categoriesData, productData } from "../../static/data.jsx";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [active, setActive] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
+  const [openWishlist, setOpenWishlist] = useState(false);
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
@@ -132,7 +136,7 @@ const Header = ({ activeHeading }) => {
 
           <div className="flex">
             <div className={`${styles.normalFlex}`}>
-              <div className="relative cursor-pointer mr-[15px]">
+              <div onClick={() => setOpenWishlist(true)} className="relative cursor-pointer mr-[15px]">
                 <AiOutlineHeart size={30} color="rgb(255 255 255 /83%)" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc117] text-white font-mono leading-tight text-center text-[12px] w-4 h-4 p-0 m-0">
                   0
@@ -140,7 +144,10 @@ const Header = ({ activeHeading }) => {
               </div>
             </div>
             <div className={`${styles.normalFlex}`}>
-              <div className="relative cursor-pointer mr-[15px]">
+              <div
+                onClick={() => setOpenCart(true)}
+                className="relative cursor-pointer mr-[15px]"
+              >
                 <AiOutlineShoppingCart
                   size={30}
                   color="rgb(255 255 255 /83%)"
@@ -167,6 +174,12 @@ const Header = ({ activeHeading }) => {
                 )}
               </div>
             </div>
+            {/* cart popup */}
+            {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
+            {/* wishlist popup */}
+            {openWishlist ? (
+              <Wishlist setOpenWishlist={setOpenWishlist} />
+            ) : null}
           </div>
         </div>
       </div>

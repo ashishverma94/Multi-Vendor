@@ -13,6 +13,7 @@ import {
   ProductsPage,
   ActivationPage,
   BestSellingPage,
+  ProductDetailsPage,
 } from "./Routes.js";
 
 import "./App.css";
@@ -24,6 +25,7 @@ function App() {
   useEffect(() => {
     Store.dispatch(loadUser());
   }, []);
+
   return (
     <>
       {loading ? null : (
@@ -37,11 +39,13 @@ function App() {
               <Route path="/sign-up" element={<SignupPage />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/best-selling" element={<BestSellingPage />} />
+              <Route path="/products/:name" element={<ProductDetailsPage />} />
               <Route
                 path="/activation/:activation_token"
                 element={<ActivationPage />}
               />
             </Routes>
+            
             <ToastContainer
               position="top-right"
               autoClose={4000}
