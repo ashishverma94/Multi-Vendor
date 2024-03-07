@@ -16,9 +16,12 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import Wishlist from "../Wishlist/Wishlist.jsx";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { categoriesData, productData } from "../../static/data.jsx";
+import { RxCross1 } from "react-icons/rx";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+
+  const [open, setOpen] = useState(false);
   const [active, setActive] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -53,7 +56,10 @@ const Header = ({ activeHeading }) => {
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
           <div>
             <Link to="/">
-              <img src="" alt="main-img" />
+              <img
+                src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+                alt="main-img"
+              />
             </Link>
           </div>
 
@@ -76,7 +82,7 @@ const Header = ({ activeHeading }) => {
                     const d = i.name;
                     const Product_name = d.replace(/\s+/g, "-");
                     return (
-                      <Link to={`/product/${Product_name}`}>
+                      <Link key={index} to={`/products/${Product_name}`}>
                         <div className="w-full flex items-start py-3">
                           <img
                             src={i.image_Url[0].url}
@@ -136,7 +142,10 @@ const Header = ({ activeHeading }) => {
 
           <div className="flex">
             <div className={`${styles.normalFlex}`}>
-              <div onClick={() => setOpenWishlist(true)} className="relative cursor-pointer mr-[15px]">
+              <div
+                onClick={() => setOpenWishlist(true)}
+                className="relative cursor-pointer mr-[15px]"
+              >
                 <AiOutlineHeart size={30} color="rgb(255 255 255 /83%)" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc117] text-white font-mono leading-tight text-center text-[12px] w-4 h-4 p-0 m-0">
                   0
@@ -182,6 +191,107 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
         </div>
+      </div>
+
+      {/* MOBILE HEADER  */}
+      <div
+        className={`${
+          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
+        } 800px:hidden w-full h-[60px] bg-white z-50 top-0 left-0 shadow-sm`}
+      >
+        <div className="w-full flex items-center justify-between mt-2">
+          <div>
+            <BiMenuAltLeft
+              size={40}
+              className="ml-4"
+              onClick={() => setOpen(true)}
+            />
+          </div>
+          <div>
+            <img
+              src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+              alt=""
+              className=" cursor-pointer"
+            />
+          </div>
+          <div>
+            <div className="relative mr-[20px]">
+              <AiOutlineShoppingCart size={30} />
+              <span className="absolute right-0 top-0 rounded-full bg-[#3bc117] text-white font-mono leading-tight text-center text-[11px] w-4 h-4 p-0 m-0">
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+        {/* HEADER SIDEBAR  */}
+        {open && (
+          <div className={`  fixed w-full bg-[#0000005f] z-20 h-full left-0`}>
+            <div className="fixed bg-white w-[60%] h-screen top-0 left-0 z-10">
+              <div className="w-full justify-between flex pr-3">
+                <div>
+                  <div className="relative mr-[15px]">
+                    <AiOutlineHeart size={30} className="mt-5 ml-3" />
+                    <span className="absolute right-0 top-0 rounded-full bg-[#3bc117] text-white font-mono leading-tight text-center text-[12px] w-4 h-4 p-0 m-0">
+                      0
+                    </span>
+                  </div>
+                </div>
+                <RxCross1
+                  size={20}
+                  className="ml-4 mt-5 "
+                  onClick={() => setOpen(false)}
+                />
+              </div>
+              <div className="my-8 w-[92%] m-auto h-[40px] relative">
+                <input
+                  type="text"
+                  placeholder="Search Product..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
+                />
+                {searchData &&
+                  searchData.map((i, index) => {
+                    const d = i.name;
+                    let Product_name = "";
+                    for (let p = 0; p < d.length; p++) {
+                      if (d[p] == " ") {
+                        Product_name = Product_name + "-";
+                      } else {
+                        Product_name = Product_name + d[p];
+                      }
+                    }
+                    return (
+                      <Link key={index} to={`/products/${Product_name}`}>
+                        <div className="w-full flex items-start py-3">
+                          <img
+                            src={i.image_Url[0].url}
+                            alt=""
+                            className="w-[40px] h-[40px] mr-[10px]"
+                          />
+                          <h1> {i.name}</h1>
+                        </div>
+                      </Link>
+                    );
+                  })}
+              </div>
+              <Navbar activeHeading={activeHeading} />
+              <div className={`${styles.button} m-auto !rounded-[4px]`}>
+                <Link to="/seller">
+                  <h1 className="text-[#fff] flex items-center">
+                    Become Seller <IoIosArrowForward className="ml-1 " />
+                  </h1>
+                </Link>
+              </div>
+              <br />
+              <br />
+              <div className="flex w-full justify-center">
+              <Link to="/sign-up" className="text-[16px] pr-[10px] text-[#2a2727]">Signup</Link>
+              <Link to="/login" className="text-[16px]  text-[#2a2727]">Login</Link>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

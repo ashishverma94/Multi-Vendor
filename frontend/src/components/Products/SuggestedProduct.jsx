@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { productData } from "../../static/data";
 import styles from "../../styles/style";
+import { useEffect, useState } from "react";
+import { productData } from "../../static/data";
 import ProductCard from "../../components/Route/ProductCard/ProductCard";
 
 const SuggestedProduct = ({ data }) => {

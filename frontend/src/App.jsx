@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Store from "./redux/store.js";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 import { loadUser } from "./redux/actions/user.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
@@ -10,6 +11,7 @@ import {
   LoginPage,
   SignupPage,
   EventsPage,
+  ProfilePage,
   ProductsPage,
   ActivationPage,
   BestSellingPage,
@@ -20,7 +22,7 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const { loading } = useSelector((state) => state.user);
+  const { loading, isAuthnticated } = useSelector((state) => state.user);
 
   useEffect(() => {
     Store.dispatch(loadUser());
@@ -41,11 +43,19 @@ function App() {
               <Route path="/best-selling" element={<BestSellingPage />} />
               <Route path="/products/:name" element={<ProductDetailsPage />} />
               <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute isAuthenticated={isAuthnticated}>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="/activation/:activation_token"
                 element={<ActivationPage />}
               />
             </Routes>
-            
+
             <ToastContainer
               position="top-right"
               autoClose={4000}
