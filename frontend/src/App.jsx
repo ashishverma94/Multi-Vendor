@@ -3,8 +3,8 @@ import Store from "./redux/store.js";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./ProtectedRoute.jsx";
-import { loadUser } from "./redux/actions/user.js";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { loadSeller, loadUser } from "./redux/actions/user.js";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import {
   FAQPage,
   HomePage,
@@ -13,24 +13,29 @@ import {
   EventsPage,
   ProfilePage,
   ProductsPage,
+  ShopLoginPage,
+  ShopCreatePage,
   ActivationPage,
   BestSellingPage,
   ProductDetailsPage,
+  SellerActivationPage,
 } from "./Routes.js";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const { loading, isAuthnticated } = useSelector((state) => state.user);
+  const { isLoading, isSeller, seller } = useSelector((state) => state.user);
+  const { loading, isAuthnticated } = useSelector((state) => state.seller);
 
   useEffect(() => {
     Store.dispatch(loadUser());
+    Store.dispatch(loadSeller());
   }, []);
 
   return (
     <>
-      {loading ? null : (
+      {loading || isLoading ? null : (
         <>
           <BrowserRouter>
             <Routes>
@@ -40,6 +45,8 @@ function App() {
               <Route path="/events" element={<EventsPage />} />
               <Route path="/sign-up" element={<SignupPage />} />
               <Route path="/products" element={<ProductsPage />} />
+              <Route path="/shop-login" element={<ShopLoginPage />} />
+              <Route path="/shop-create" element={<ShopCreatePage />} />
               <Route path="/best-selling" element={<BestSellingPage />} />
               <Route path="/products/:name" element={<ProductDetailsPage />} />
               <Route
@@ -53,6 +60,10 @@ function App() {
               <Route
                 path="/activation/:activation_token"
                 element={<ActivationPage />}
+              />
+              <Route
+                path="/seller/activation/:activation_token"
+                element={<SellerActivationPage />}
               />
             </Routes>
 

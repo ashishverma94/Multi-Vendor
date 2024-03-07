@@ -98,7 +98,7 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
           <div className={`${styles.button}`}>
-            <Link to="/seller">
+            <Link to="/shop-create">
               <h1 className="text-[#fff] flex items-center">
                 Become Seller <IoIosArrowForward className="ml-1 " />
               </h1>
@@ -277,7 +277,7 @@ const Header = ({ activeHeading }) => {
               </div>
               <Navbar activeHeading={activeHeading} />
               <div className={`${styles.button} m-auto !rounded-[4px]`}>
-                <Link to="/seller">
+                <Link to="/shop-create">
                   <h1 className="text-[#fff] flex items-center">
                     Become Seller <IoIosArrowForward className="ml-1 " />
                   </h1>
@@ -286,8 +286,32 @@ const Header = ({ activeHeading }) => {
               <br />
               <br />
               <div className="flex w-full justify-center">
-              <Link to="/sign-up" className="text-[16px] pr-[10px] text-[#2a2727]">Signup</Link>
-              <Link to="/login" className="text-[16px]  text-[#2a2727]">Login</Link>
+                {!isAuthenticated ? (
+                  <>
+                    <Link
+                      to="/sign-up"
+                      className="text-[16px] rounded-[5px] px-5 py-2 bg-[#379bf2] mr-3 text-[#2a2727]"
+                    >
+                      Signup
+                    </Link>
+                    <Link
+                      to="/login"
+                      className="text-[16px] rounded-[5px] px-5 py-2 bg-[#379bf2] text-[#2a2727]"
+                    >
+                      Login
+                    </Link>
+                  </>
+                ) : (
+                  <div>
+                    <Link to="/profile">
+                      <img
+                        src={`${backend_url}${user.avatar}`}
+                        className="w-[70px] h-[70px] rounded-full  border-[#2eca48] border-[3px]"
+                        alt="avatar"
+                      />
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
