@@ -5,7 +5,7 @@ const LoadSellerSuccess = createAction("LoadSellerSuccess");
 const LoadSellerFail = createAction("LoadSellerFail");
 
 const initialState = {
-  isAuthenticated: false,
+  isLoading: true,
 };
 
 export const sellerReducer = createReducer(
@@ -19,14 +19,14 @@ export const sellerReducer = createReducer(
       })
 
       .addCase(LoadSellerSuccess, (state, action) => {
-        state.isAuthenticated = true;
+        state.isSeller = true;
         state.isLoading = false;
         state.seller = action.payload;
       })
       .addCase(LoadSellerFail, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        state.isAuthenticated = false;
+        state.isSeller = false;
       });
   }
 );

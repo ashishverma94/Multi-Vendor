@@ -1,10 +1,3 @@
-import { useEffect } from "react";
-import Store from "./redux/store.js";
-import { useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import ProtectedRoute from "./ProtectedRoute.jsx";
-import { loadSeller, loadUser } from "./redux/actions/user.js";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import {
   FAQPage,
   HomePage,
@@ -19,15 +12,26 @@ import {
   BestSellingPage,
   ProductDetailsPage,
   SellerActivationPage,
-} from "./Routes.js";
+} from "./routes/Routes.js";
+
+import {
+  ShopHomePage,
+  ShopCreateProduct,
+  ShopDashboardPage,
+} from "./routes/ShopRoutes.js";
+
+import { useEffect } from "react";
+import Store from "./redux/store.js";
+import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./routes/ProtectedRoute.jsx";
+import { loadSeller, loadUser } from "./redux/actions/user.js";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SellerProtectedRoute from "./routes/SellerProtectedRoute.jsx";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const { isLoading, isSeller, seller } = useSelector((state) => state.user);
-  const { loading, isAuthnticated } = useSelector((state) => state.seller);
-
   useEffect(() => {
     Store.dispatch(loadUser());
     Store.dispatch(loadSeller());
@@ -35,54 +39,76 @@ function App() {
 
   return (
     <>
-      {loading || isLoading ? null : (
-        <>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/faq" element={<FAQPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/events" element={<EventsPage />} />
-              <Route path="/sign-up" element={<SignupPage />} />
-              <Route path="/products" element={<ProductsPage />} />
-              <Route path="/shop-login" element={<ShopLoginPage />} />
-              <Route path="/shop-create" element={<ShopCreatePage />} />
-              <Route path="/best-selling" element={<BestSellingPage />} />
-              <Route path="/products/:name" element={<ProductDetailsPage />} />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute isAuthenticated={isAuthnticated}>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/activation/:activation_token"
-                element={<ActivationPage />}
-              />
-              <Route
-                path="/seller/activation/:activation_token"
-                element={<SellerActivationPage />}
-              />
-            </Routes>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/sign-up" element={<SignupPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/best-selling" element={<BestSellingPage />} />
+          <Route path="/products/:name" element={<ProductDetailsPage />} />
+          {/* shop routes  */}
+          <Route
+            path="/shop/:id"
+            element={
+              <SellerProtectedRoute>
+                <ShopHomePage />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <SellerProtectedRoute>
+                <ShopDashboardPage />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard-create-product"
+            element={
+              <SellerProtectedRoute>
+                <ShopCreateProduct />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route path="/shop-login" element={<ShopLoginPage />} />
+          <Route path="/shop-create" element={<ShopCreatePage />} />
 
-            <ToastContainer
-              position="top-right"
-              autoClose={4000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="colored"
-              transition:Bounce
-            />
-          </BrowserRouter>
-        </>
-      )}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/activation/:activation_token"
+            element={<ActivationPage />}
+          />
+          <Route
+            path="/seller/activation/:activation_token"
+            element={<SellerActivationPage />}
+          />
+        </Routes>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          transition:Bounce
+        />
+      </BrowserRouter>
     </>
   );
 }

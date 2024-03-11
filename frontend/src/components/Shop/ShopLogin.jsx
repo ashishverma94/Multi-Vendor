@@ -1,10 +1,10 @@
+import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { server } from "../../server.js";
 import styles from "../../styles/style.js";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { server } from "../../server.js";
-import { toast } from "react-toastify";
-import axios from "axios";
 
 const ShopLogin = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const ShopLogin = () => {
       )
       .then((res) => {
         toast.success("Login Successful!");
-        navigate("/");
+        navigate("/dashboard");
         window.location.reload(true) ;
       })
       .catch((error) => {
