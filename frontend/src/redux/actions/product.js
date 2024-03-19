@@ -1,5 +1,5 @@
 import axios from "axios";
-import {server} from "../../server.js";
+import { server } from "../../server.js";
 
 // CREATE PRODUCT
 export const createProduct = (prodData) => async (dispatch) => {
@@ -19,9 +19,54 @@ export const createProduct = (prodData) => async (dispatch) => {
       type: "ProductCreateSuccess",
       payload: data.product,
     });
-  } catch (error)  {
+  } catch (error) {
     dispatch({
       type: "ProductCreateFail",
+      payload: error.response.data,
+    });
+  }
+};
+
+// GET ALL PRODUCTS
+export const getAllProductsShop = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "GetAllProductsShopRequest",
+    });
+
+    const { data } = await axios.get(
+      `${server}/product/get-all-products-shop/${id}`
+    );
+    dispatch({
+      type: "GetAllProductsShopSuccess",
+      payload: data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: "GetAllProductsShopFail",
+      payload: error.response.data,
+    });
+  }
+};
+
+// DELETE PRODUCT OF A SHOP
+export const deleteProduct = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "DeleteProductRequest",
+    });
+
+    const { data } = await axios.delete(
+      `${server}/product/delete-shop-product/${id}`,
+      { withCredentials: true }
+    );
+    dispatch({
+      type: "DeleteProductSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "DeleteProductFail",
       payload: error.response.data,
     });
   }

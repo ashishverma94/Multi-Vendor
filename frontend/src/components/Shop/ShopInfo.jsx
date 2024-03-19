@@ -1,20 +1,22 @@
-import { useSelector } from "react-redux";
-import { backend_url } from "../../server";
+import axios from 'axios' ;
 import styles from "../../styles/style" ;
+import { useSelector } from "react-redux";
+import { backend_url, server } from "../../server";
 
 const ShopInfo = ({ isOwner }) => {
   const { seller } = useSelector((state) => state.seller);
   const logoutHandler =()=>{
-    
+    axios.get(`${server}/shop/logout`,{withCredentials:true});
+    window.location.reload() ;
   }
   return (
-    <>
-      <div className="w-full py-5">
+    <div className="">
+      <div className="w-full  py-5">
         <div className="w-full flex items-center justify-center">
           <img
             src={`${backend_url}${seller?.avatar}`}
             alt=""
-            className=" border-gray-950 border-[1px] w-[150px] h-[150px] object-cover rounded-full"
+            className=" border-gray-950 border-[1px] w-[120px] h-[120px] object-cover rounded-full"
           />
         </div>
         <h3 className="text-center py-2 text-[20px]">{seller.name}</h3>
@@ -22,23 +24,23 @@ const ShopInfo = ({ isOwner }) => {
           {seller.description}
         </p>
       </div>
-      <div className="p-3 ">
+      <div className="p-2 ">
         <h5 className="font-[600]">Address</h5>
         <h4 className="text-[#000000a6]">{seller.address}</h4>
       </div>
-      <div className="p-3 ">
+      <div className="p-2 ">
         <h5 className="font-[600]">Phone Number</h5>
         <h4 className="text-[#000000a6]">{seller.phoneNumber}</h4>
       </div>
-      <div className="p-3 ">
+      <div className="p-2 ">
         <h5 className="font-[600]">Total Products</h5>
         <h4 className="text-[#000000a6]">10</h4>
       </div>
-      <div className="p-3 ">
+      <div className="p-2 ">
         <h5 className="font-[600]">Shop Ratings</h5>
         <h4 className="text-[#000000a6]">4/5</h4>
       </div>
-      <div className="p-3 ">
+      <div className="p-2 ">
         <h5 className="font-[600]">Joined On</h5>
         <h4 className="text-[#000000a6]">{seller.createdAt.slice(0, 10)}</h4>
       </div>
@@ -54,7 +56,7 @@ const ShopInfo = ({ isOwner }) => {
           </div>
         )
       }
-    </>
+    </div>
   );
 };
 

@@ -9,9 +9,11 @@ const { isSeller } = require("../middleware/auth.js");
 const sendShopToken = require("../utils/shopToken.js");
 const ErrorHandler = require("../utils/ErrorHandler.js");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors.js");
+const { isAuthenticated } = require("../middleware/auth.js");
 
 const router = express.Router();
 
+// CREATE SHOP
 router.post("/create-shop", upload.single("avatar"), async (req, res, next) => {
   try {
     const { email } = req.body;
@@ -62,7 +64,7 @@ router.post("/create-shop", upload.single("avatar"), async (req, res, next) => {
     return next(new ErrorHandler(error.message, 400));
   }
 });
-
+  
 // SELLER ACTIVATION TOKEN
 const createActivationToken = (seller) => {
   return jwt.sign(seller, process.env.ACTIVATION_SECRET, {
@@ -135,7 +137,7 @@ router.post(
       return next(new ErrorHandler(error.message, 500));
     }
   })
-);
+); 
 
 // LOAD SHOP
 router.get(
@@ -155,6 +157,27 @@ router.get(
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// LOGOUT FROM SHOP
+router.get(
+  "/logout",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      res.cookie("seller_token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+      });
+
+      res.status(201).json({
+        success: true,
+        message: "Log out Successfully!",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(err.message, 500));
     }
   })
 );

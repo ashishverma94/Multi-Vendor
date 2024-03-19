@@ -252,6 +252,13 @@ export const categoriesData = [
       "https://static.vecteezy.com/system/resources/previews/011/996/555/original/3d-black-headphone-illustration-ecommerce-icon-png.png",
   },
   {
+    id: 9,
+    title: "Books and Stationaries",
+    subTitle: "",
+    image_Url:
+      "https://media.istockphoto.com/id/157482029/photo/stack-of-books.jpg?s=2048x2048&w=is&k=20&c=pYFo-KV5os-YhgBkfv9HQGM9cEPv6hvpvhf80CJTcHw=",
+  },
+  {
     id: 10,
     title: "Others",
     subTitle: "",
