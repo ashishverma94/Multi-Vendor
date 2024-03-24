@@ -53,7 +53,7 @@ const eventSchema = mongoose.Schema({
   images: [
     {
       type: String,
-    },
+    } ,
   ],
 
   shopId: {

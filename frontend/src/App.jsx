@@ -16,7 +16,10 @@ import {
 
 import {
   ShopHomePage,
+  ShopAllEvents,
   ShopAllProducts,
+  ShopCreateEvent,
+  shopAllCoupouns,
   ShopCreateProduct,
   ShopDashboardPage,
 } from "./routes/ShopRoutes.js";
@@ -80,6 +83,31 @@ function App() {
             element={
               <SellerProtectedRoute>
                 <ShopCreateProduct />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard-create-event"
+            element={
+              <SellerProtectedRoute>
+                <ShopCreateEvent />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard-events"
+            element={
+              <SellerProtectedRoute>
+                <ShopAllEvents />
+              </SellerProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard-coupouns"
+            element={
+              <SellerProtectedRoute>
+                <shopAllCoupouns />
               </SellerProtectedRoute>
             }
           />
