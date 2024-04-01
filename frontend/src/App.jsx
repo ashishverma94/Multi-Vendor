@@ -19,7 +19,7 @@ import {
   ShopAllEvents,
   ShopAllProducts,
   ShopCreateEvent,
-  shopAllCoupouns,
+  ShopAllCoupouns,
   ShopCreateProduct,
   ShopDashboardPage,
 } from "./routes/ShopRoutes.js";
@@ -27,6 +27,8 @@ import {
 import { useEffect } from "react";
 import Store from "./redux/store.js";
 import { ToastContainer } from "react-toastify";
+import { getAllEvents } from "./redux/actions/event.js";
+import { getAllProducts } from "./redux/actions/product.js";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 import { loadSeller, loadUser } from "./redux/actions/user.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -39,6 +41,8 @@ function App() {
   useEffect(() => {
     Store.dispatch(loadUser());
     Store.dispatch(loadSeller());
+    Store.dispatch(getAllEvents());
+    Store.dispatch(getAllProducts());
   }, []);
 
   return (
@@ -107,7 +111,7 @@ function App() {
             path="/dashboard-coupouns"
             element={
               <SellerProtectedRoute>
-                <shopAllCoupouns />
+                <ShopAllCoupouns />
               </SellerProtectedRoute>
             }
           />

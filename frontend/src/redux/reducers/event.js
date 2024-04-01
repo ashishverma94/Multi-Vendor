@@ -4,6 +4,10 @@ const EventCreateFail = createAction("EventCreateFail");
 const EventCreateRequest = createAction("EventCreateRequest");
 const EventCreateSuccess = createAction("EventCreateSuccess");
 
+const GetAllEventsFail = createAction("GetAllEventsFail") ;
+const GetAllEventsRequest = createAction("GetAllEventsRequest");
+const GetAllEventsSuccess = createAction("GetAllEventsSuccess");
+
 const GetAllEventsShopFail = createAction("GetAllEventsShopFail") ;
 const GetAllEventsShopRequest = createAction("GetAllEventsShopRequest");
 const GetAllEventsShopSuccess = createAction("GetAllEventsShopSuccess");
@@ -38,7 +42,21 @@ export const EventReducer = createReducer(
         state.success = false;
       })
 
-      // GET ALL EventS
+      // GET ALL EVENTS
+      .addCase(GetAllEventsRequest,(state)=>{
+        state.isLoading = true;
+      })
+      .addCase(GetAllEventsSuccess,(state,action)=>{
+        state.isLoading = false;
+        state.allEvents = action.payload;
+      })
+      .addCase(GetAllEventsFail,(state,action)=>{
+        state.isLoading = false;
+        state.error = action.payload;
+        console.log(action,state) ;
+      })
+
+      // GET ALL EVENTS BY SHOP
       .addCase(GetAllEventsShopRequest,(state)=>{
         state.isLoading = true;
       })

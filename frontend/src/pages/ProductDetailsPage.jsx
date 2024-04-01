@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Layout/Header";
@@ -8,21 +9,13 @@ import SuggestedProduct from "../components/Products/SuggestedProduct.jsx";
 
 const ProductDetailsPage = () => {
   const { name } = useParams();
-
+  const { allProducts } = useSelector((state) => state.products);
   const [data, setData] = useState(null);
-  let productName = "";
-  for (let i = 0; i < name.length; i++) {
-    if (name[i] == "-") {
-      productName = productName + " ";
-    } else {
-      productName = productName + name[i];
-    }
-  }
-
+  
   useEffect(() => {
-    const data = productData.find((i) => i.name === productName);
+    const data = allProducts?.find((i) => i._id === name);
     setData(data);
-  }, []);
+  }, [allProducts]);
 
   return (
     <div>

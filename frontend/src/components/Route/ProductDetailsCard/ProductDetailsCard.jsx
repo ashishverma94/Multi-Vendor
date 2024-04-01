@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../../styles/style";
+import {backend_url} from "../../../server"
 import {
   AiOutlineMessage,
   AiFillHeart,
@@ -9,6 +10,8 @@ import {
 } from "react-icons/ai";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
+  console.log(data) ;
+  
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   // const [select, setSelect] = useState(false);
@@ -36,10 +39,10 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
             <div className="block w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
-                <img src={data.image_Url[0].url} alt="" />
+                <img src={`${backend_url}${data?.images[0]}`} alt="" />
                 <div className="flex">
                   <img
-                    src={data.shop.shop_avatar.url}
+                    src={`${backend_url}${data?.shop?.avatar}`}
                     alt=""
                     className="w-[50px] h-[50px] rounded-full mr-2"
                   />

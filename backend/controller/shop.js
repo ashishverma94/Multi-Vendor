@@ -64,7 +64,7 @@ router.post("/create-shop", upload.single("avatar"), async (req, res, next) => {
     return next(new ErrorHandler(error.message, 400));
   }
 });
-  
+
 // SELLER ACTIVATION TOKEN
 const createActivationToken = (seller) => {
   return jwt.sign(seller, process.env.ACTIVATION_SECRET, {
@@ -137,7 +137,7 @@ router.post(
       return next(new ErrorHandler(error.message, 500));
     }
   })
-); 
+);
 
 // LOAD SHOP
 router.get(
@@ -159,7 +159,7 @@ router.get(
       return next(new ErrorHandler(error.message, 500));
     }
   })
-);
+); 
 
 // LOGOUT FROM SHOP
 router.get(
@@ -178,6 +178,22 @@ router.get(
       });
     } catch (error) {
       return next(new ErrorHandler(err.message, 500));
+    }
+  })
+);
+
+// GET SHOP INFO
+router.get(
+  "/get-shop-info/:id",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const shop = await Shop.findById(req.params.id);
+      res.status(201).json({
+        success: true,
+        shop,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
     }
   })
 );

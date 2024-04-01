@@ -38,7 +38,7 @@ router.post(
   })
 );
 
-// GET ALL PRODUCTS
+// GET ALL PRODUCTS FOR SHOP
 router.get(
   "/get-all-products-shop/:id",
   catchAsyncErrors(async (req, res, next) => {
@@ -69,6 +69,22 @@ router.delete(
       res.status(201).json({
         success: true,
         message:"Product deleted successfully!",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+router.get(
+  "/get-all-products",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const products = await Product.find().sort({ createdAt: -1 });
+
+      res.status(201).json({
+        success: true,
+        products,
       });
     } catch (error) {
       return next(new ErrorHandler(error, 400));

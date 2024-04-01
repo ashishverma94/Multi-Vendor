@@ -1,14 +1,30 @@
-import axios from 'axios' ;
-import styles from "../../styles/style" ;
+import axios from "axios";
+import styles from "../../styles/style";
 import { useSelector } from "react-redux";
 import { backend_url, server } from "../../server";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const ShopInfo = ({ isOwner }) => {
+  const [data, setData] = useState({});
+
+  const { id } = useParams();
+  useEffect(() => {
+    axios
+      .get(`${server}/shop/get-shop-info/${id}`)
+      .then((res) => {
+        setData(res.data.shop);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const { seller } = useSelector((state) => state.seller);
-  const logoutHandler =()=>{
-    axios.get(`${server}/shop/logout`,{withCredentials:true});
-    window.location.reload() ;
-  }
+  const logoutHandler = () => {
+    axios.get(`${server}/shop/logout`, { withCredentials: true });
+    window.location.reload();
+  };
   return (
     <div className="">
       <div className="w-full  py-5">
@@ -44,18 +60,19 @@ const ShopInfo = ({ isOwner }) => {
         <h5 className="font-[600]">Joined On</h5>
         <h4 className="text-[#000000a6]">{seller.createdAt.slice(0, 10)}</h4>
       </div>
-      {
-        isOwner && (
-          <div className="py-3 px-4">
-            <div className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`}>
-              <span className="text-white">Edit Shop</span>
-            </div>
-            <div onClick={logoutHandler} className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`}>
-              <span className="text-white">Log Out</span>
-            </div>
+      {isOwner && (
+        <div className="py-3 px-4">
+          <div className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`}>
+            <span className="text-white">Edit Shop</span>
           </div>
-        )
-      }
+          <div
+            onClick={logoutHandler}
+            className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`}
+          >
+            <span className="text-white">Log Out</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

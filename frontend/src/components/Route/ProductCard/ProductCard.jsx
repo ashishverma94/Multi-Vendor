@@ -1,7 +1,3 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import styles from "../../../styles/style";
-import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard.jsx"
 import {
   AiFillHeart,
   AiFillStar,
@@ -10,22 +6,26 @@ import {
   AiOutlineShoppingCart,
   AiOutlineStar,
 } from "react-icons/ai";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import styles from "../../../styles/style";
+import { backend_url } from "../../../server.js";
+import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard.jsx"
 
 const ProductCard = ({ data, i }) => {
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
-
   const d = data.name;
   const product_name = d.replace(/\s+/g, "-");
-
   return (
     <>
-      <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
+      <div className="w-full h-[370px] bg-[white] rounded-lg shadow-sm p-3 relative cursor-pointer">
         <div className="flex justify-end"></div>
-        <Link to={`/products/${product_name}`}>
+        <Link to={`/products/${data._id}`}>
           {
             <img
-              src={data.image_Url[0].url}
+              // src={data.image_Url[0].url}
+              src = {`${backend_url}${data?.images[0] }`}
               alt=""
               className="w-full h-[170px] object-contain"
             />
@@ -68,14 +68,14 @@ const ProductCard = ({ data, i }) => {
           <div className="py-2 flex items-center justify-between">
             <div className="flex">
               <h5 className={`${styles.productDiscountPrice}`}>
-                {data.price === 0 ? data.price : data.discount_price}$
+                {data.originalPrice === 0 ? data.originalPrice : data.discountPrice}$
               </h5>
               <h4 className={`${styles.price}`}>
-                {data.price ? data.price + " $" : null}
+                {data.originalPrice ? data.originalPrice + " $" : null}
               </h4>
             </div>
             <span className="font-[400] text-[17px] text-[#68d284]">
-              {data.total_sell} sold
+              {data.sold_out} sold
             </span>
           </div>
         </Link>

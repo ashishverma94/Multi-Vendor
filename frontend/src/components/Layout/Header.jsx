@@ -3,22 +3,23 @@ import {
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import Cart from "../Cart/Cart.jsx";
+import Cart from "../Cart/Cart";
+import Navbar from "../Layout/Navbar";
 import React, { useState } from "react";
 import styles from "../../styles/style";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Navbar from "../Layout/Navbar.jsx";
+import { RxCross1 } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
+import Wishlist from "../Wishlist/Wishlist";
 import { backend_url } from "../../server.js";
 import Dropdown from "../Layout/Dropdown.jsx";
 import { BiMenuAltLeft } from "react-icons/bi";
-import Wishlist from "../Wishlist/Wishlist.jsx";
+import { categoriesData } from "../../static/data.jsx";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
-import { categoriesData, productData } from "../../static/data.jsx";
-import { RxCross1 } from "react-icons/rx";
 
 const Header = ({ activeHeading }) => {
+  const { allProducts } = useSelector((state) => state.products);
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
   const [open, setOpen] = useState(false);
@@ -34,8 +35,8 @@ const Header = ({ activeHeading }) => {
     setSearchTerm(term);
 
     const filteredProducts =
-      productData &&
-      productData.filter((product) =>
+      allProducts &&
+      allProducts.filter((product) =>
         product.name.toLowerCase().includes(term.toLowerCase())
       );
 
@@ -76,16 +77,14 @@ const Header = ({ activeHeading }) => {
               className="absolute right-2 top-1.5 cursor-pointer"
             />
             {searchData && searchData.length !== 0 ? (
-              <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
+              <div className="absolute min-h-[30vh] bg-[#faf7f7] w-full shadow-sm-2 z-[9] p-4">
                 {searchData &&
                   searchData.map((i, index) => {
-                    const d = i.name;
-                    const Product_name = d.replace(/\s+/g, "-");
                     return (
-                      <Link key={index} to={`/products/${Product_name}`}>
-                        <div className="w-full flex items-start py-3">
+                      <Link key={index} to={`/products/${i._id}`}>
+                        <div className="w-full flex items-start  py-3">
                           <img
-                            src={i.image_Url[0].url}
+                            src={`${backend_url}${i.images[0]}`}
                             alt=""
                             className="w-[40px] h-[40px] mr-[10px]"
                           />
@@ -263,9 +262,9 @@ const Header = ({ activeHeading }) => {
                     }
                     return (
                       <Link key={index} to={`/products/${Product_name}`}>
-                        <div className="w-full flex items-start py-3">
+                        <div className="w-full bg-[#e9e5e5] flex items-start py-3">
                           <img
-                            src={i.image_Url[0].url}
+                            src={`${backend_url}${i.images[0]}`}
                             alt=""
                             className="w-[40px] h-[40px] mr-[10px]"
                           />
