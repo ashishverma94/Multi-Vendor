@@ -1,17 +1,21 @@
-import React, { useState } from "react";
-import { RxCross1 } from "react-icons/rx";
-import styles from "../../../styles/style";
-import {backend_url} from "../../../server"
 import {
   AiOutlineMessage,
   AiFillHeart,
   AiOutlineHeart,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { RxCross1 } from "react-icons/rx";
+import styles from "../../../styles/style";
+import { backend_url } from "../../../server";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../../redux/actions/cart";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
-  console.log(data) ;
-  
+  const { cart } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   // const [select, setSelect] = useState(false);
@@ -23,6 +27,22 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
   const incrementCount = () => {
     setCount(count + 1);
+  };
+
+  const addToCartHandler = (id) => {
+    const isItemExists = cart && cart.find((i) => i._id === id);
+    if (isItemExists) {
+      toast.error("Item already in cart");
+    } else {
+      console.log(data.stock,count)
+      if (data.stock < count) {
+        toast.error("Product stock limited");
+      } else {
+        const cartData = { ...data, qty: count };
+        dispatch(addToCart(cartData));
+        toast.success("Item add to cart");
+      }
+    }
   };
 
   const handleMessageSubmit = () => {};
@@ -117,6 +137,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   </div>
                 </div>
                 <div
+                  onClick={() => addToCartHandler(data._id)}
                   className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}
                 >
                   <span className="text-white flex items-center">

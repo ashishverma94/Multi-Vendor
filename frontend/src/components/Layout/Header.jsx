@@ -19,6 +19,7 @@ import { categoriesData } from "../../static/data.jsx";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
 const Header = ({ activeHeading }) => {
+  const { cart } = useSelector((state) => state.cart);
   const { allProducts } = useSelector((state) => state.products);
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -161,7 +162,7 @@ const Header = ({ activeHeading }) => {
                   color="rgb(255 255 255 /83%)"
                 />
                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc117] text-white font-mono leading-tight text-center text-[12px] w-4 h-4 p-0 m-0">
-                  1
+                  {cart && cart.length}
                 </span>
               </div>
             </div>
@@ -217,7 +218,7 @@ const Header = ({ activeHeading }) => {
             <div className="relative mr-[20px]">
               <AiOutlineShoppingCart size={30} />
               <span className="absolute right-0 top-0 rounded-full bg-[#3bc117] text-white font-mono leading-tight text-center text-[11px] w-4 h-4 p-0 m-0">
-                1
+                {cart && cart.length}
               </span>
             </div>
           </div>

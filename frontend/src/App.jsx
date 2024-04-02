@@ -57,6 +57,21 @@ function App() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/best-selling" element={<BestSellingPage />} />
           <Route path="/products/:name" element={<ProductDetailsPage />} />
+          <Route path="/shop-login" element={<ShopLoginPage />} />
+          <Route path="/shop-create" element={<ShopCreatePage />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/activation/:activation_token"
+            element={<ActivationPage />}
+          />
+          
           {/* shop routes  */}
           <Route
             path="/shop/:id"
@@ -64,7 +79,7 @@ function App() {
               <SellerProtectedRoute>
                 <ShopHomePage />
               </SellerProtectedRoute>
-            }
+            } 
           />
           <Route
             path="/dashboard"
@@ -106,7 +121,6 @@ function App() {
               </SellerProtectedRoute>
             }
           />
-
           <Route
             path="/dashboard-coupouns"
             element={
@@ -114,21 +128,6 @@ function App() {
                 <ShopAllCoupouns />
               </SellerProtectedRoute>
             }
-          />
-          <Route path="/shop-login" element={<ShopLoginPage />} />
-          <Route path="/shop-create" element={<ShopCreatePage />} />
-
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/activation/:activation_token"
-            element={<ActivationPage />}
           />
           <Route
             path="/seller/activation/:activation_token"

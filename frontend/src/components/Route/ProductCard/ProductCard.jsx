@@ -10,9 +10,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../../styles/style";
 import { backend_url } from "../../../server.js";
-import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard.jsx"
+import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
 
-const ProductCard = ({ data, i }) => {
+const ProductCard = ({ data, i }) => {  
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
   const d = data.name;
@@ -24,8 +24,7 @@ const ProductCard = ({ data, i }) => {
         <Link to={`/products/${data._id}`}>
           {
             <img
-              // src={data.image_Url[0].url}
-              src = {`${backend_url}${data?.images[0] }`}
+              src={`${backend_url}${data?.images[0]}`}
               alt=""
               className="w-full h-[170px] object-contain"
             />
@@ -68,7 +67,10 @@ const ProductCard = ({ data, i }) => {
           <div className="py-2 flex items-center justify-between">
             <div className="flex">
               <h5 className={`${styles.productDiscountPrice}`}>
-                {data.originalPrice === 0 ? data.originalPrice : data.discountPrice}$
+                {data.originalPrice === 0
+                  ? data.originalPrice
+                  : data.discountPrice}
+                $
               </h5>
               <h4 className={`${styles.price}`}>
                 {data.originalPrice ? data.originalPrice + " $" : null}
@@ -112,7 +114,7 @@ const ProductCard = ({ data, i }) => {
             color="444"
             title="Add to cart"
           />
-          {open ? <ProductDetailsCard setOpen={setOpen} data={data}/> : null}
+          {open ? <ProductDetailsCard setOpen={setOpen} data={data} /> : null}
         </div>
       </div>
     </>
