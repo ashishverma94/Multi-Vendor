@@ -8,14 +8,14 @@ import ProductDetails from "../components/Products/ProductDetails.jsx";
 import SuggestedProduct from "../components/Products/SuggestedProduct.jsx";
 
 const ProductDetailsPage = () => {
-  const { name } = useParams();
+  const { id } = useParams();
   const { allProducts } = useSelector((state) => state.products);
   const [data, setData] = useState(null);
   
   useEffect(() => {
-    const data = allProducts?.find((i) => i._id === name);
+    const data = allProducts?.find((i) => i._id === id);
     setData(data);
-  }, [allProducts]);
+  }, [allProducts,data]);
 
   return (
     <div>
