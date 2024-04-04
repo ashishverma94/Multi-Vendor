@@ -309,21 +309,20 @@ router.put(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      console.log(req.user) ;
       const user = await User.findById(req.user.id).select("+password");
-      const isPasswordMatched = await user.comparePassword(req.body.oldPassword) ;
+      const isPasswordMatched = await user.comparePassword(
+        req.body.oldPassword
+      );
       if (!isPasswordMatched) {
-        return next(
-          new ErrorHandler(`Old password is incorrect!`,400)
-        );
-      } 
+        return next(new ErrorHandler(`Old password is incorrect!`, 400));
+      }
 
-      user.password = req.body.newPassword ;
-      await user.save() ;
+      user.password = req.body.newPassword;
+      await user.save();
 
       res.status(200).json({
         success: true,
-        message:"Password changed successfully!",
+        message: "Password changed successfully!",
       });
     } catch (err) {
       return next(new ErrorHandler(err.message, 500));

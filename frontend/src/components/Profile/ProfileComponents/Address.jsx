@@ -40,7 +40,7 @@ const Address = () => {
       toast.error("Please fill all fields!");
     } else {
       dispatch(
-        updateUserAddress(country, state, address1, address2, addressType)
+        updateUserAddress(country, state, address1, address2, addressType,zipCode)
       );
       setOpen(false);
       setState("");

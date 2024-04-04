@@ -104,7 +104,7 @@ export const updateUserImage = (formData) => async (dispatch) => {
 
 // user update address
 export const updateUserAddress =
-  (country, state, address1, address2, addressType) => async (dispatch) => {
+  (country, state, address1, address2, addressType,zipCode) => async (dispatch) => {
     try {
       dispatch({
         type: "UpdateUserAddressRequest",
@@ -118,6 +118,7 @@ export const updateUserAddress =
           address1,
           address2,
           addressType,
+          zipCode
         },
         { withCredentials: true }
       );

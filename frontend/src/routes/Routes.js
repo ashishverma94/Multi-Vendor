@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
 import EventsPage from "../pages/EventsPage";
 import ProfilePage from "../pages/ProfilePage";
+import CheckOutPage from "../pages/CheckOutPage";
 import ProductsPage from "../pages/ProductsPage";
 import ShopLoginPage from "../pages/ShopLoginPage";
 import ShopCreatePage from "../pages/ShopCreatePage";
@@ -19,6 +20,7 @@ export {
   SignupPage,
   EventsPage,
   ProfilePage,
+  CheckOutPage,
   ProductsPage,
   ShopLoginPage,
   ShopCreatePage,

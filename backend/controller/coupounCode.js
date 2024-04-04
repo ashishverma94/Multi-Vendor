@@ -31,12 +31,12 @@ router.post(
 
 // GET ALL COUPON
 router.get(
-  "/get-coupon/:id",
+  "/get-coupon/",
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try { 
-      const couponCodes = await CoupounCode.find({shopId:req.params.id});
- 
+      const couponCodes = await CoupounCode.find({shop:req.seller.id});
+      console.log(couponCodes)
       res.status(201).json({
         success: true,
         couponCodes, 

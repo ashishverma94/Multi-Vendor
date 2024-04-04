@@ -6,6 +6,7 @@ import {
   EventsPage,
   ProfilePage,
   ProductsPage,
+  CheckOutPage,
   ShopLoginPage,
   ShopCreatePage,
   ActivationPage,
@@ -68,6 +69,14 @@ function App() {
             }
           />
           <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <CheckOutPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/activation/:activation_token"
             element={<ActivationPage />}
           />
@@ -81,6 +90,8 @@ function App() {
               </SellerProtectedRoute>
             } 
           />
+
+
           <Route
             path="/dashboard"
             element={

@@ -27,7 +27,7 @@ const AllCoupons = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${server}/coupon/get-coupon/${seller._id}`, {
+      .get(`${server}/coupon/get-coupon/`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -142,7 +142,7 @@ const AllCoupons = () => {
           />
           {open && (
             <div className="fixed top-0 left-0 w-full h-screen !bg-[#00000062] z-[200000] flex items-center justify-center">
-              <div className="w-[70%] 800px:w-[50%] border-[5px] h-[80vh] bg-[white] rounded-md shadow p-4">
+              <div className=" w-[85%] md:w-[70%]  lg:w-[35%] border-[5px] h-[65vh] bg-[white] rounded-md shadow p-4">
                 <div className="w-full flex justify-end">
                   <RxCross1
                     size={30}
@@ -156,38 +156,41 @@ const AllCoupons = () => {
                 {/* create coupoun code */}
                 <form onSubmit={handleSubmit} aria-required={true}>
                   <br />
-                  <div>
-                    <label className="pb-2">
-                      Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={name}
-                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Enter your coupon code name..."
-                    />
+                  <div className= "flex justify-between">
+                    <div className="w-[60%]">
+                      <label className="pb-2">
+                        Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={name}
+                        className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter your coupon code name..."
+                      />
+                    </div>
+                    <div className="w-[38%]">
+                      <label className="pb-2">
+                        Discount Percentenge
+                        <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="value"
+                        value={value}
+                        required
+                        className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        onChange={(e) => setValue(e.target.value)}
+                        placeholder="Enter your coupon code value..."
+                      />
+                    </div>
                   </div>
+
                   <br />
-                  <div>
-                    <label className="pb-2">
-                      Discount Percentenge{" "}
-                      <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="value"
-                      value={value}
-                      required
-                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      onChange={(e) => setValue(e.target.value)}
-                      placeholder="Enter your coupon code value..."
-                    />
-                  </div>
-                  <br />
-                  <div>
+                  <div className="flex justify-between">
+                  <div className="w-[49%]">
                     <label className="pb-2">Min Amount</label>
                     <input
                       type="number"
@@ -198,8 +201,7 @@ const AllCoupons = () => {
                       placeholder="Enter your coupon code min amount..."
                     />
                   </div>
-                  <br />
-                  <div>
+                  <div className="w-[49%]">
                     <label className="pb-2">Max Amount</label>
                     <input
                       type="number"
@@ -209,6 +211,7 @@ const AllCoupons = () => {
                       onChange={(e) => setMaxAmount(e.target.value)}
                       placeholder="Enter your coupon code max amount..."
                     />
+                  </div>
                   </div>
                   <br />
                   <div>
