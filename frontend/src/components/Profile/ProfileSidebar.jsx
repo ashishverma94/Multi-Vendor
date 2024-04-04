@@ -4,13 +4,10 @@ import { toast } from "react-toastify";
 import { RxPerson } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { TbAddressBook } from "react-icons/tb";
+import { IoKeyOutline } from "react-icons/io5";
 import { MdOutlineTrackChanges } from "react-icons/md";
+import { AiOutlineLogin, AiOutlineMessage } from "react-icons/ai";
 import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from "react-icons/hi";
-import {
-  AiOutlineCreditCard,
-  AiOutlineLogin,
-  AiOutlineMessage,
-} from "react-icons/ai";
 
 const ProfileSidebar = ({ active, setActive }) => {
   const navigate = useNavigate();
@@ -99,13 +96,13 @@ const ProfileSidebar = ({ active, setActive }) => {
         onClick={() => setActive(6)}
         className="flex items-center cursor-pointer w-full mb-8"
       >
-        <AiOutlineCreditCard size={20} color={active === 6 ? "red" : ""} />
+        <IoKeyOutline size={20} color={active === 6 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 6 ? "text-[red]" : ""
           } 800px:block hidden`}
         >
-          Payment Methods
+          Change Password
         </span>
       </div>
       <div

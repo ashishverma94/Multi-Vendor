@@ -22,10 +22,12 @@ export const CartReducer = createReducer(
           return {
             ...state,
             cart: state.cart.map((i) => (i._id === isItemExist._id ? item : i)),
+            isLoading:false
           };
         } else {
           return {
             ...state,
+            isLoading:false,
             cart: [...state.cart, item],
           };
         }
@@ -34,6 +36,7 @@ export const CartReducer = createReducer(
       .addCase(RemoveFromCart, (state, action) => {
         return {
           ...state,
+          isLoading:false,
           cart: state.cart.filter((i) => i._id !== action.payload),
         };
       });

@@ -174,4 +174,161 @@ router.get(
   })
 );
 
+// UPDATE USER INFO
+router.put(
+  "/update-user-info",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { email, name, password, phoneNumber } = req.body;
+      const user = await User.findOne({ email }).select("+password");
+
+      if (!user) {
+        return next(new ErrorHandler("User not found", 400));
+      }
+
+      const isPasswordValid = await user.comparePassword(password);
+
+      if (!isPasswordValid) {
+        return next(new ErrorHandler("Password is incorrect!", 400));
+      }
+
+      user.name = name;
+      user.email = email;
+      user.phoneNumber = phoneNumber;
+      await user.save();
+
+      res.status(201).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// UPDATE USER AVATAR
+router.put(
+  "/update-avatar",
+  isAuthenticated,
+  upload.single("image"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const existUser = await User.findById(req.user.id);
+      const existAvatarPath = `uploads/${existUser.avatar}`;
+
+      fs.unlinkSync(existAvatarPath);
+      const fileUrl = path.join(req.file.filename);
+      const newUser = await User.findByIdAndUpdate(req.user.id, {
+        avatar: fileUrl,
+      });
+
+      const user = newUser;
+      user.avatar = fileUrl;
+
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (err) {
+      return next(new ErrorHandler(err.message, 500));
+    }
+  })
+);
+
+// UPDATE USER ADDRESS
+router.put(
+  "/update-user-address",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id);
+      const sameTypeAddress = user.addresses.find(
+        (address) => address.addressType === req.body.addressType
+      );
+      if (sameTypeAddress) {
+        return next(
+          new ErrorHandler(`${req.body.addressType} address already exists`)
+        );
+      }
+
+      const existAddress = user.addresses.find(
+        (address) => address._id === req.body._id
+      );
+      if (existAddress) {
+        Object.assign(existAddress, req.body);
+      } else {
+        // add new address to the array
+        user.addresses.push(req.body);
+      }
+
+      await user.save();
+
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (err) {
+      return next(new ErrorHandler(err.message, 500));
+    }
+  })
+);
+
+// DELETE USER ADDRESS
+router.delete(
+  "/delete-user-address/:id",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const userId = req.user._id;
+      const addressId = req.params.id;
+
+      await User.updateOne(
+        {
+          _id: userId,
+        },
+        { $pull: { addresses: { _id: addressId } } }
+      );
+
+      const user = await User.findById(userId);
+
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (err) {
+      return next(new ErrorHandler(err.message, 500));
+    }
+  })
+);
+
+// UPDATE USER PASSWORD
+router.put(
+  "/update-password",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      console.log(req.user) ;
+      const user = await User.findById(req.user.id).select("+password");
+      const isPasswordMatched = await user.comparePassword(req.body.oldPassword) ;
+      if (!isPasswordMatched) {
+        return next(
+          new ErrorHandler(`Old password is incorrect!`,400)
+        );
+      } 
+
+      user.password = req.body.newPassword ;
+      await user.save() ;
+
+      res.status(200).json({
+        success: true,
+        message:"Password changed successfully!",
+      });
+    } catch (err) {
+      return next(new ErrorHandler(err.message, 500));
+    }
+  })
+);
+
 module.exports = router;
