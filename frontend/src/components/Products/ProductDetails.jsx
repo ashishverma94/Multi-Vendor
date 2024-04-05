@@ -30,7 +30,7 @@ const ProductDetails = ({ data }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProductsShop(data?.shop?._id));
-    if (wishlist && wishlist.find((i) => i._id === data._id)) {
+    if (wishlist && wishlist.find((i) => i._id === data?._id)) {
       setClick(true);
     } else {
       setClick(false);

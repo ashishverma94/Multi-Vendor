@@ -3,7 +3,7 @@ const Shop = require("../model/shop.js");
 const CoupounCode = require("../model/coupounCode.js");
 const ErrorHandler = require("../utils/ErrorHandler.js");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors.js");
-const { isSeller } = require("../middleware/auth");
+const { isSeller } = require("../middleware/auth.js");
 const router = express.Router();
 
 // CREATE COUPON

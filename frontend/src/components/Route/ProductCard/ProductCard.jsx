@@ -64,7 +64,7 @@ const ProductCard = ({ data, i }) => {
 
   return (
     <>
-      <div className="w-full h-[370px] bg-[white] rounded-lg shadow-sm p-3 relative cursor-pointer">
+      <div className="w-full  h-[370px] bg-[white] rounded-lg shadow-sm p-3 relative cursor-pointer">
         <div className="flex justify-end"></div>
         <Link to={`/products/${data._id}`}>
           {
@@ -75,9 +75,11 @@ const ProductCard = ({ data, i }) => {
             />
           }
         </Link>
-        <Link to={`/shop/preview/${data?.shop._id}`}>
-          <h5 className={`${styles.shop_name}`}> {data.shop.name}</h5>
-        </Link>
+
+        <h5 className={`${styles.shop_name}`}>
+          <Link to={`/shop/preview/${data?.shop._id}`}> {data.shop.name}</Link>
+        </h5>
+
         <Link to={`/product/${product_name}`}>
           <h4 className="pb-3 font-[500]">
             {data.name.length > 40 ? data.name.slice(0, 40) + "..." : data.name}

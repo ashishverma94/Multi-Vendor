@@ -6,6 +6,7 @@ import EventsPage from "../pages/EventsPage";
 import ProfilePage from "../pages/ProfilePage";
 import CheckOutPage from "../pages/CheckOutPage";
 import ProductsPage from "../pages/ProductsPage";
+import PaymentPage from "../pages/PaymentPage.jsx";
 import ShopLoginPage from "../pages/ShopLoginPage";
 import ShopCreatePage from "../pages/ShopCreatePage";
 import ActivationPage from "../pages/ActivationPage";
@@ -19,6 +20,7 @@ export {
   LoginPage,
   SignupPage,
   EventsPage,
+  PaymentPage,
   ProfilePage,
   CheckOutPage,
   ProductsPage,

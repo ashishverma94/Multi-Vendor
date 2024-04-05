@@ -1,4 +1,8 @@
 import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../../../redux/actions/wishlist";
+import {
   AiOutlineMessage,
   AiFillHeart,
   AiOutlineHeart,
@@ -11,10 +15,6 @@ import { useState, useEffect } from "react";
 import { backend_url } from "../../../server";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../redux/actions/cart";
-import {
-  addToWishlist,
-  removeFromWishlist,
-} from "../../../redux/actions/wishlist";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
   const { cart } = useSelector((state) => state.cart);
@@ -39,7 +39,6 @@ const ProductDetailsCard = ({ setOpen, data }) => {
     if (isItemExists) {
       toast.error("Item already in cart");
     } else {
-      console.log(data.stock, count);
       if (data.stock < count) {
         toast.error("Product stock limited");
       } else {
