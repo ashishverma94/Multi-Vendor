@@ -1,6 +1,6 @@
 const express = require("express");
 const Shop = require("../model/shop.js");
-const CoupounCode = require("../model/coupounCode.js");
+const CoupounCode = require("../model/coupoun.js");
 const ErrorHandler = require("../utils/ErrorHandler.js");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors.js");
 const { isSeller } = require("../middleware/auth.js");

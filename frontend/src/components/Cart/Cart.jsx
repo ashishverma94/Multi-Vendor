@@ -28,8 +28,8 @@ const Cart = ({ setOpenCart }) => {
 
   return (
     <div className="fixed flex justify-end   top-0 left-0 w-full bg-[#0000005b] z-10">
-      <div className="  top-0  right-0 w-[25%] h-screen flex flex-col shadow-sm">
-        <div className="flex h-[10%] bg-white w-full p-3  items-center justify-between pt-5 pr-5">
+      <div className="  top-0  right-0 w-[350px] h-screen flex flex-col shadow-sm">
+        <div className="flex h-[10%] bg-[white] w-full p-3  items-center justify-between pt-5 pr-5">
           <div className={`${styles.normalFlex} `}>
             <IoBagHandleOutline size={25} />
             <h5 className="pl-2 text-[20px] font-[500]">{cart.length} items</h5>

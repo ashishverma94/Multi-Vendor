@@ -76,25 +76,27 @@ const ProductDetails = ({ data }) => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-[white]">
       {data ? (
         <div className={`  ${styles.section} w-[90%] 800px:w-[80%]`}>
-          <div className="w-full py-5">
-            <div className="block w-full 800px:flex">
-              <div className="w-full 800px:w-[50%]">
-                <img
-                  src={`${backend_url}${data.images && data.images[0]}`}
-                  alt=""
-                  className=" cursor-pointer"
-                />
-                <div className="w-full flex">
+          <div className="w-full  py-5">
+            <div className="block w-full  800px:flex">
+              <div className="w-full flex flex-col p-3  items-center 800px:w-[50%]">
+                <div className="flex justify-center items-center h-[340px] w-full">
+                  <img
+                    src={`${backend_url}${data.images && data.images[0]}`}
+                    alt=""
+                    className=" h-[320px] cursor-pointer"
+                  />
+                </div>
+                <div className="w-full bg-[] h-[170px] flex justify-around mt-3">
                   <div
-                    className={`${
+                    className={`flex items-center${
                       select === 0 ? "border" : "null"
                     } cursor-pointer `}
                   >
                     <img
-                      className="h-[200px]"
+                      className="h-[170px]"
                       onClick={() => setSelect(0)}
                       src={`${backend_url}${data.images && data.images[0]}`}
                       alt=""
@@ -106,7 +108,7 @@ const ProductDetails = ({ data }) => {
                     } cursor-pointer `}
                   >
                     <img
-                      className="h-[200px]"
+                      className="h-[170px]"
                       onClick={() => setSelect(0)}
                       src={`${backend_url}${data.images && data.images[1]}`}
                       alt=""

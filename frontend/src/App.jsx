@@ -12,6 +12,7 @@ import {
   ShopCreatePage,
   ActivationPage,
   BestSellingPage,
+  OrderSuccessPage,
   ProductDetailsPage,
   SellerActivationPage,
 } from "./routes/Routes.js";
@@ -65,14 +66,14 @@ function App() {
         {stripeApiKey && (
           <Elements stripe={loadStripe(stripeApiKey)}>
             <Routes>
-            <Route
-              path="/payment"
-              element={
-                <ProtectedRoute>
-                  <PaymentPage />
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="/payment"
+                element={
+                  <ProtectedRoute>
+                    <PaymentPage />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </Elements>
         )}
@@ -103,6 +104,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/order/success" element={<OrderSuccessPage />} />
           <Route
             path="/activation/:activation_token"
             element={<ActivationPage />}

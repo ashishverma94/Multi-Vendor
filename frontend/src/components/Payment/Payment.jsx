@@ -5,6 +5,9 @@ import {
   CardNumberElement,
   CardExpiryElement,
 } from "@stripe/react-stripe-js";
+import axios from "axios" ;
+import {server} from "../../server";
+import { toast } from "react-toastify";
 import styles from "../../styles/style";
 import { useSelector } from "react-redux";
 import { RxCross1 } from "react-icons/rx";
@@ -35,12 +38,73 @@ const Payment = () => {
     amount: Math.round(orderData?.totalPrice * 100),
   };
 
+  const paymentData = {
+    amount: Math.round(orderData?.totalPrice * 100),
+  };
+
   const cashOnDeliveryHandler = async (e) => {
     e.preventDefault();
   };
 
+  const order = {
+    cart: orderData?.cart,
+    shippingAddress: orderData?.shippingAddress,
+    user: user && user,
+    totalPrice: orderData?.totalPrice,
+  };
+
   const paymentHandler = async (e) => {
     e.preventDefault();
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      
+      const { data } = await axios.post(
+        `${server}/payment/process`,
+        paymentData,
+        config
+      );
+
+      const client_secret = data.client_secret;
+      if (!stripe || !elements) {
+        return;
+      } 
+
+      const result = await stripe.confirmCardPayment(client_secret, {
+        payment_method: {
+          card: elements.getElement(CardNumberElement),
+        },   
+      }); 
+
+      if (result.error) {
+        toast.error(result.error.message);
+      } else {
+        if (result.paymentIntent.status === "succeeded") {
+          order.paymentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status,
+            type: "Credit Card,",
+          }; 
+
+          await axios
+            .post(`${server}/order/create-order`, order, config)
+            .then((res) => {
+              setOpen(false);
+              navigate("/order/success");
+              toast.success("Order Successfull!");
+              // send email functionality
+              // { ... }
+              localStorage.setItem("cartItems", JSON.stringify([]));
+              localStorage.setItem("latestOrder", JSON.stringify([]));
+            });
+        }
+      } 
+    } catch (err) {
+      toast.error(err);
+    } 
   };
 
   return (
@@ -134,42 +198,42 @@ const PaymentInfo = ({
                 <div className="w-[50%]">
                   <label className="block pb-2">Card Number</label>
                   <CardNumberElement
-                      className={`${styles.input} !h-[35px] !w-[95%]`}
-                      options={{
-                        style: {
-                          base: {
-                            fontSize: "19px",
-                          },
-                          empty: {
-                            color: "#3a120a",
-                            backgroundColor: "transparent",
-                            "::placeholder": {
-                              color: "#gray",
-                            },
+                    className={`${styles.input} !h-[35px] !w-[95%]`}
+                    options={{
+                      style: {
+                        base: {
+                          fontSize: "19px",
+                        },
+                        empty: {
+                          color: "#3a120a",
+                          backgroundColor: "transparent",
+                          "::placeholder": {
+                            color: "#gray",
                           },
                         },
-                      }}
-                    />
+                      },
+                    }}
+                  />
                 </div>
                 <div className="w-[50%]">
                   <label className="block pb-2">CVV</label>
                   <CardCvcElement
-                      className={`${styles.input} !h-[35px]`}
-                      options={{
-                        style: {
-                          base: {
-                            fontSize: "19px",
-                          },
-                          empty: {
-                            color: "#3a120a",
-                            backgroundColor: "transparent",
-                            "::placeholder": {
-                              color: "gray",
-                            },
+                    className={`${styles.input} !h-[35px]`}
+                    options={{
+                      style: {
+                        base: {
+                          fontSize: "19px",
+                        },
+                        empty: {
+                          color: "#3a120a",
+                          backgroundColor: "transparent",
+                          "::placeholder": {
+                            color: "gray",
                           },
                         },
-                      }}
-                    />
+                      },
+                    }}
+                  />
                 </div>
               </div>
               <input

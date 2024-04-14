@@ -26,7 +26,7 @@ const Wishlist = ({ setOpenWishlist }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000005b] h-screen z-10">
-      <div className="fixed top-0 right-0 min-h-full w-[25%] bg-white flex flex-col justify-between shadow-sm">
+      <div className="fixed top-0 right-0 min-h-full w-[350px] bg-white flex flex-col justify-between shadow-sm">
         <div>
           <div className="flex w-full justify-between items-center px-3">
             <div className={`${styles.normalFlex} p-4`}>

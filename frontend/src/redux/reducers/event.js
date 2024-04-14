@@ -53,7 +53,6 @@ export const EventReducer = createReducer(
       .addCase(GetAllEventsFail,(state,action)=>{
         state.isLoading = false;
         state.error = action.payload;
-        console.log(action,state) ;
       })
 
       // GET ALL EVENTS BY SHOP

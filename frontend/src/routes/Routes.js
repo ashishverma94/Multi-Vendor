@@ -13,6 +13,7 @@ import ActivationPage from "../pages/ActivationPage";
 import BestSellingPage from "../pages/BestSelliingpage";
 import ProductDetailsPage from "../pages/ProductDetailsPage";
 import SellerActivationPage from "../pages/SellerActivationPage";
+import OrderSuccessPage from "../pages/OrderSuccessPage.jsx" ;
 
 export {
   FAQPage,
@@ -28,6 +29,7 @@ export {
   ShopCreatePage,
   ActivationPage,
   BestSellingPage,
+  OrderSuccessPage,
   ProductDetailsPage,
   SellerActivationPage,
 };

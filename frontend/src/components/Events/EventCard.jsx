@@ -53,7 +53,7 @@ const EventCard = ({ active, data }) => {
         <CountDown finishedDate={data?.endDate} />
         <br />
         <div className="flex gap-3 items-center">
-          <Link to={`/products/${data._id}?isEvent=true`}>
+          <Link to={`/products/${data?._id}?isEvent=true`}>
             <div className={`${styles.button} text-white`}>See Details</div>
           </Link>
           <Link>

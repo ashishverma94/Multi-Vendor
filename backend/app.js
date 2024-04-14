@@ -28,17 +28,19 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   });
 }
 
-// import routes
+// import routes 
 const user = require("./controller/user.js");
 const shop = require("./controller/shop.js");
 const event = require("./controller/event.js");
-const product = require("./controller/product.js");
+const order = require("./controller/order.js");
 const coupon = require("./controller/coupoun.js");
+const product = require("./controller/product.js");
 const payment = require("./controller/payment.js");
 
-app.use("/api/v2/user", user);
+app.use("/api/v2/user", user);  
 app.use("/api/v2/shop", shop);
 app.use("/api/v2/event", event);
+app.use("/api/v2/order", order); 
 app.use("/api/v2/coupon", coupon);
 app.use("/api/v2/product", product);
 app.use("/api/v2/payment", payment);
