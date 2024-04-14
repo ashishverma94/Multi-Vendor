@@ -1,13 +1,18 @@
+import {
+  Address,
+  AllOrders,
+  UserProfile,
+  ChangePassword,
+} from "../Profile/ProfileComponents/index";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { Address, UserProfile,ChangePassword } from "../Profile/ProfileComponents/index";
 
 const ProfileContent = ({ active }) => {
   const { error, successMessage } = useSelector((state) => state?.user);
   console.log(active);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -23,6 +28,9 @@ const ProfileContent = ({ active }) => {
     <div className="w-full ">
       {/* PROFILE PAGE  */}
       {active === 1 && <UserProfile />}
+
+      {/* order */}
+      {active === 2 && <AllOrders />}
 
       {/* CHANGE PASSWORD  */}
       {active === 6 && <ChangePassword />}
