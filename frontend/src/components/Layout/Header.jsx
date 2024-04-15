@@ -19,8 +19,8 @@ import { categoriesData } from "../../static/data.jsx";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
 const Header = ({ activeHeading }) => {
-  
   const { cart } = useSelector((state) => state.cart);
+  const { isSeller } = useSelector((state) => state.seller);
   const { wishlist } = useSelector((state) => state.wishlist);
   const { allProducts } = useSelector((state) => state.products);
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -102,7 +102,12 @@ const Header = ({ activeHeading }) => {
           <div className={`${styles.button}`}>
             <Link to="/shop-create">
               <h1 className="text-[#fff] flex items-center">
-                Become Seller <IoIosArrowForward className="ml-1 " />
+                {isSeller ? (
+                  <span className="text-[14px]">Go to Dashboard</span>
+                ) : (
+                  "Become Seller"
+                )}
+                <IoIosArrowForward className="ml-1 " />
               </h1>
             </Link>
           </div>

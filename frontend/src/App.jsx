@@ -13,6 +13,7 @@ import {
   ActivationPage,
   BestSellingPage,
   OrderSuccessPage,
+  OrderDetailsPage,
   ProductDetailsPage,
   SellerActivationPage,
 } from "./routes/Routes.js";
@@ -20,9 +21,11 @@ import {
 import {
   ShopHomePage,
   ShopAllEvents,
+  ShopAllOrders,
   ShopAllProducts,
   ShopCreateEvent,
   ShopAllCoupouns,
+  ShopOrderDetails,
   ShopCreateProduct,
   ShopDashboardPage,
 } from "./routes/ShopRoutes.js";
@@ -97,6 +100,14 @@ function App() {
             }
           />
           <Route
+            path="/user/order/:id"
+            element={
+              <ProtectedRoute>
+                <OrderDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/checkout"
             element={
               <ProtectedRoute>
@@ -133,6 +144,22 @@ function App() {
             element={
               <SellerProtectedRoute>
                 <ShopAllProducts />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard-orders"
+            element={
+              <SellerProtectedRoute>
+                <ShopAllOrders />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/order/:id"
+            element={
+              <SellerProtectedRoute>
+                <ShopOrderDetails />
               </SellerProtectedRoute>
             }
           />
